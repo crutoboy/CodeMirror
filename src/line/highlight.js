@@ -1,9 +1,9 @@
-import { countColumn } from "../util/misc"
-import { copyState, innerMode, startState } from "../modes"
-import StringStream from "../util/StringStream"
+import { countColumn } from "../util/misc.js"
+import { copyState, innerMode, startState } from "../modes.js"
+import StringStream from "../util/StringStream.js"
 
-import { getLine, lineNo } from "./utils_line"
-import { clipPos } from "./pos"
+import { getLine, lineNo } from "./utils_line.js"
+import { clipPos } from "./pos.js"
 
 class SavedContext {
   constructor(state, lookAhead) {
@@ -157,7 +157,7 @@ function callBlankLine(mode, state) {
   if (inner.mode.blankLine) return inner.mode.blankLine(inner.state)
 }
 
-export function readToken(mode, stream, state, inner) {
+function readToken(mode, stream, state, inner) {
   for (let i = 0; i < 10; i++) {
     if (inner) inner[0] = innerMode(mode, state).mode
     let style = mode.token(stream, state)
@@ -198,7 +198,7 @@ function extractLineClasses(type, output) {
     let prop = lineClass[1] ? "bgClass" : "textClass"
     if (output[prop] == null)
       output[prop] = lineClass[2]
-    else if (!(new RegExp("(?:^|\s)" + lineClass[2] + "(?:$|\s)")).test(output[prop]))
+    else if (!(new RegExp("(?:^|\\s)" + lineClass[2] + "(?:$|\\s)")).test(output[prop]))
       output[prop] += " " + lineClass[2]
   }
   return type
